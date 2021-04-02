@@ -13,5 +13,7 @@ urlpatterns = [
   path('animes/<int:pk>/update/', views.AnimeUpdate.as_view(), name='animes_update'),
   path('animes/<int:pk>/delete/', views.AnimeDelete.as_view(), name='animes_delete'),
   path('animes/<int:anime_id>/add_watching/', views.add_watching, name='add_watching'),
+  path('animes/<int:anime_id>/add_photo/', views.add_photo, name='add_photo'),
+  path('animes/<int:anime_id>/assoc_va/<int:va_id>/', views.assoc_va, name='assoc_va'),
 ]
 

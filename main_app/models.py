@@ -34,6 +34,13 @@ class Anime(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'anime_id': self.id})
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for anime_id: {self.anime_id} @{self.url}"
+
 class Watching(models.Model):
       date = models.DateField()
       seen = models.CharField(
