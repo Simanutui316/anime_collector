@@ -1,20 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Anime Details</h1>
-
 <div class="card">
+  <h1><span class="red-text darken-3">Anime</span> Details</h1>
+
+
   <div class="card-content">
     <span class="card-title">{{ anime.name }}</span>
     <p>Title: {{ anime.title }}</p>
     <p>Genre: {{ anime.genre }}</p>
-      <p>Description: {{ anime.description }}</p>
-    {% if anime.seasons = 0 %}
-      <p>Seasons: {{ anime.seasons }}
-    {% else %}
-      <p>Anime: Ongoing</p>
+    <p>Description: {{ anime.description }}</p>
+    {% if anime.seasons == 0 %}
+    <p>Seasons: {{ anime.seasons }}
+      {% else %}
+    <p>Anime: Ongoing</p>
     {% endif %}
   </div>
+  <div class="card-action red darken-3">
+    <a href="{% url 'animes_update' anime.id %}">Edit</a>
+    <a href="{% url 'animes_delete' anime.id %}">Destroy</a>
+  </div>
+  <div class="col s6">
+    <div class="card white">
+      <form action="{% url 'add_watching' anime.id %}" method="post">
+        {% csrf_token %}
+        {{ watching_form.as_p }}
+        <input type="submit" class="btn red darken-3" value="Add Viewing">
+      </form>
+    </div>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Seen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for watching in anime.watching_set.all %}
+        <tr>
+          <td>{{watching.date}}</td>
+          <td>{{watching.get_seen_display}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  const selectEl = document.getElementById('id_seen');
+  M.FormSelect.init(selectEl);
+</script>
 
 {% endblock %}

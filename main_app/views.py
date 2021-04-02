@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.http import HttpResponse
 from .models import Anime
+from .forms import WatchingForm
 
 
 class AnimeCreate(CreateView):
@@ -11,6 +12,15 @@ class AnimeCreate(CreateView):
     # fields = ['title', 'genre', 'description', 'seasons']
     fields = '__all__'
     # template_name = 'animes/index.html'
+
+class AnimeUpdate(UpdateView):
+      model = Anime
+  # Let's disallow the renaming of a cat by excluding the name field!
+      fields = '__all__'
+
+class AnimeDelete(DeleteView):
+  model = Anime
+  success_url = '/animes/'
 
 # animes = [
 #     Anime('Haikyuu', 'Sports', 'Volleyball Anime', 4),
@@ -33,4 +43,13 @@ def animes_index(request):
 
 def animes_detail(request, anime_id):
     anime = Anime.objects.get(id=anime_id)
-    return render(request, 'animes/detail.html', { 'anime': anime})
+    watching_form = WatchingForm()
+    return render(request, 'animes/detail.html', { 'anime': anime, 'watching_form': watching_form})
+
+def add_watching(request, anime_id):
+  form = WatchingForm(request.POST)
+  if form.is_valid():
+      new_watching = form.save(commit=False)
+      new_watching.anime_id = anime_id
+      new_watching.save()
+  return redirect('detail', anime_id=anime_id)

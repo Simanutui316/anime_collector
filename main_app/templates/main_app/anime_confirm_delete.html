@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container grey lighten-3">
+    <h1>Destroy <span class="red-text darken-3">Anime</span></h1>
+
+    <h4>Are you sure you want to destroy <span class="red-text darken-3">{{ object.title }}</span>?</h4>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Yes - Destroy!" class="btn red darken-3 pulse">
+        <a href="{% url 'detail' anime.id %}"><span class="red-text darken-3">Cancel</span></a>
+    </form>
+</div>
+{% endblock %}
