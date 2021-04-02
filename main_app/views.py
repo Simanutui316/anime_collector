@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 
 from django.http import HttpResponse
-from .models import Anime
+from .models import Anime, Va
 from .forms import WatchingForm
 
 
@@ -43,8 +44,9 @@ def animes_index(request):
 
 def animes_detail(request, anime_id):
     anime = Anime.objects.get(id=anime_id)
+    vas_anime_doesnt_have = Va.objects.exclude(id__in = anime.vas.all().values_list('id'))
     watching_form = WatchingForm()
-    return render(request, 'animes/detail.html', { 'anime': anime, 'watching_form': watching_form})
+    return render(request, 'animes/detail.html', { 'anime': anime, 'watching_form': watching_form, 'vas': vas_anime_doesnt_have})
 
 def add_watching(request, anime_id):
   form = WatchingForm(request.POST)
