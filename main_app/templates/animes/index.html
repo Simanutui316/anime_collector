@@ -1,24 +1,27 @@
-{% comment %} {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
-<h1>Anime List</h1>
+<h1 class="anime-list">Anime List</h1>
 
 {% for anime in animes %}
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ anime.name }}</span>
-      <p>Title: {{ anime.title }}</p>
-      <p>Description: {{ anime.genre }}</p>
-      {% if anime.seasons > 1 %}
-        <p>Seasons: {{ anime.seasons }}</p>
-      {% else %}
-        <p>Seasons: Ongoing</p>
-      {% endif %}
-    </div>
-  </div>
+<div class="card black">
+    <!-- <a href="/animes/{{ anime.id }}"> -->
+    <a href="{% url 'detail' anime.id %}">
+        <div class="card-content white-text">
+            <span class="card-title">{{ anime.name }}</span>
+            <p>Title: {{ anime.title }}</p>
+            <p>Description: {{ anime.genre }}</p>
+            {% if anime.seasons == 0 %}
+            <p>Seasons: {{ anime.seasons }}</p>
+            {% else %}
+            <p>Seasons: Ongoing</p>
+            {% endif %}
+        </div>
+    </a>
+</div>
 {% endfor %}
 
 
 
 
-{% endblock %} {% endcomment %}
+{% endblock %}

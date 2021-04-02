@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Anime Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ anime.name }}</span>
+    <p>Title: {{ anime.title }}</p>
+    <p>Genre: {{ anime.genre }}</p>
+      <p>Description: {{ anime.description }}</p>
+    {% if anime.seasons = 0 %}
+      <p>Seasons: {{ anime.seasons }}
+    {% else %}
+      <p>Anime: Ongoing</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

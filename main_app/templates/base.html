@@ -17,8 +17,9 @@
           <li><a href="/" class="center brand-logo">&nbsp;&nbsp;Anime Collector</a></li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
-          <li><a href="/animes">View All My Anime</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'animes_create' %}">Add an Anime</a></li>
+          <li><a href="{% url 'index' %}">View All My Anime</a></li>
         </ul>
       </div>
     </nav>

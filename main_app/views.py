@@ -1,13 +1,16 @@
 from django.shortcuts import render
+
+from django.views.generic.edit import CreateView
+
 from django.http import HttpResponse
 from .models import Anime
 
-# class Anime:
-#     def __init__(self, title, genre, description, seasons):
-#         self.title = title
-#         self.genre = genre
-#         self.description = description
-#         self.seasons = seasons
+
+class AnimeCreate(CreateView):
+    model = Anime
+    # fields = ['title', 'genre', 'description', 'seasons']
+    fields = '__all__'
+    # template_name = 'animes/index.html'
 
 # animes = [
 #     Anime('Haikyuu', 'Sports', 'Volleyball Anime', 4),
@@ -25,9 +28,9 @@ def about(request):
     return render(request, 'about.html')
 
 def animes_index(request):
-    animes = Anime.object.all()
+    animes = Anime.objects.all()
     return render(request, 'animes/index.html', { 'animes': animes })
 
-# def animes_detail(request, anime_id):
-    # anime = Anime.objects.get(id=anime_id)
-    # return render(request, 'animes/detail.html', { 'anime': anime})
+def animes_detail(request, anime_id):
+    anime = Anime.objects.get(id=anime_id)
+    return render(request, 'animes/detail.html', { 'anime': anime})
